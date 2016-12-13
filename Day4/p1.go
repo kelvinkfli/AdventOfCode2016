@@ -28,9 +28,9 @@ func secIDSum(input string) int {
 	for scanner.Scan() {
 		line := scanner.Text()
 		list := strings.Split(line, "")
+
 		checkSum := list[len(list)-6 : len(list)-1]
 		value := list[len(list)-10 : len(list)-7]
-		// fmt.Println(value)
 		encrypted := list[0 : len(list)-11]
 
 		letterTracker := map[string]int{}
