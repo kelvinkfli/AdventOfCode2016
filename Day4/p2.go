@@ -69,7 +69,32 @@ func secIDSum(input string) int {
 				log.Fatal(err)
 			}
 			total += increment
+			shiftNum := increment % 26
+			newList := shift(encrypted, shiftNum)
+			newString := strings.Join(newList, "")
+			// fmt.Println(newString)
+			if strings.Contains(newString, "north") {
+				return increment
+			}
 		}
 	}
 	return total
+}
+
+func shift(letters []string, num int) []string {
+	newstr := []string{}
+	for _, v := range letters {
+		s := []byte(v)
+		for _, byte := range s {
+			for i := 1; i <= num; i++ {
+				byte = byte + 1
+				if byte > 122 {
+					byte = 97
+				}
+			}
+			newAlpha := string(byte)
+			newstr = append(newstr, newAlpha)
+		}
+	}
+	return newstr
 }
