@@ -18,6 +18,7 @@ func getTLS(input string) {
 	if err != nil {
 		log.Fatal(err)
 	}
+	defer file.Close()
 
 	counter := 0
 
@@ -42,30 +43,22 @@ Top:
 				continue
 			}
 
-			if isOutside == true {
-				if line[i] == line[i+2] && line[i+1] != line[i] {
-					firstLetter := line[i]
-					secondLetter := line[i+1]
-					pair := firstLetter + secondLetter
+			if line[i] == line[i+2] && line[i+1] != line[i] {
+				firstLetter := line[i]
+				secondLetter := line[i+1]
+				pair := firstLetter + secondLetter
+				if isOutside {
 					aba = append(aba, pair)
-				}
-			}
-			if isOutside == false {
-				if line[i] == line[i+2] && line[i+1] != line[i] {
-					firstLetter := line[i]
-					secondLetter := line[i+1]
-					pair := firstLetter + secondLetter
+				} else {
 					bab = append(bab, pair)
 				}
 			}
 		}
 
 		for _, a := range aba {
-			aba1 := a[0]
-			aba2 := a[1]
+			aba1, aba2 := a[0], a[1]
 			for _, b := range bab {
-				bab1 := b[0]
-				bab2 := b[1]
+				bab1, bab2 := b[0], b[1]
 				if aba1 == bab2 && aba2 == bab1 {
 					counter++
 					continue Top
